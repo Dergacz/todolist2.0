@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
@@ -18,7 +18,6 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         } else {
             setError("Title is required");
         }
-
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
