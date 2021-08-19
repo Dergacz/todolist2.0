@@ -1,24 +1,28 @@
 import React from 'react';
-import {Button} from './Button';
-import {AddItemForm, AddItemFormPropsType} from '../components/AddItemForm/AddItemForm';
 import {Meta, Story} from '@storybook/react/types-6-0';
 import {action} from '@storybook/addon-actions';
+import {EditableSpan, EditableSpanPropsType} from '../components/EditableSpan/EditableSpan';
 
 
 export default {
-  title: 'Todolists/AddItemForm',
-  component: AddItemForm,
-  argTypes: {
-    onClick: {
-      description: "Button inside form clicked"
+    title: 'Todolists/EditableSpan',
+    component: EditableSpan,
+    argTypes: {
+        onChange: {
+            description: 'Value EditableSpan changed'
+        },
+        value: {
+            defaultValue: 'HTML',
+            description: 'Start value EditableSpan'
+        }
     }
-  },
+    ,
 } as Meta;
 
-const Template: Story<AddItemFormPropsType> = (args) => <AddItemForm {...args} />;
+const Template: Story<EditableSpanPropsType> = (args) => <EditableSpan {...args} />;
 
-export const AddItemFormExample = Template.bind({});
-AddItemFormExample.args = {
-  addItem: action("Button inside form clicked")
+export const EditableSpanExample = Template.bind({});
+EditableSpanExample.args = {
+    onChange: action('Value EditableSpan changed')
 };
 

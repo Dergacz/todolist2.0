@@ -1,24 +1,37 @@
 import React from 'react';
-import {Button} from './Button';
-import {AddItemForm, AddItemFormPropsType} from '../components/AddItemForm/AddItemForm';
 import {Meta, Story} from '@storybook/react/types-6-0';
 import {action} from '@storybook/addon-actions';
+import {Task, TaskPropsType} from '../components/Task/Task';
 
 
 export default {
-  title: 'Todolists/AddItemForm',
-  component: AddItemForm,
-  argTypes: {
-    onClick: {
-      description: "Button inside form clicked"
-    }
-  },
+  title: 'Todolists/Task',
+  component: Task
 } as Meta;
 
-const Template: Story<AddItemFormPropsType> = (args) => <AddItemForm {...args} />;
+const changeTaskStatusCallback = action("Status changed inside Task");
+const changeTaskTitleCallback = action("Title changed inside Task");
+const removeTaskStatusCallback = action("Remove button inside Task clicked");
 
-export const AddItemFormExample = Template.bind({});
-AddItemFormExample.args = {
-  addItem: action("Button inside form clicked")
-};
+const Template: Story<TaskPropsType> = (args) => <Task {...args} />;
+
+const baseArgs = {
+  changeTaskStatus: changeTaskStatusCallback,
+  changeTaskTitle: changeTaskTitleCallback,
+  removeTask: removeTaskStatusCallback
+}
+
+export const TaskIsDoneExample = Template.bind({});
+TaskIsDoneExample.args = {
+  ...baseArgs,
+  task: {id: "1", isDone: true, title: "JS"},
+  todolistId: "todolistId1"
+}
+
+export const TaskIsNotDoneExample = Template.bind({});
+TaskIsNotDoneExample.args = {
+  ...baseArgs,
+  task: {id: "1", isDone: false, title: "JS"},
+  todolistId: "todolistId1"
+}
 

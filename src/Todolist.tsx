@@ -6,7 +6,7 @@ import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./components/Task/Task";
 
-export type TaskType = {
+export type     TaskType = {
     id: string
     title: string
     isDone: boolean
