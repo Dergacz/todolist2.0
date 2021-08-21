@@ -1,29 +1,24 @@
-import React, {useCallback} from "react";
-import "./App.css";
-import {TaskType, Todolist} from "./Todolist";
-import {AddItemForm} from "./components/AddItemForm/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
-import {addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/todolistReducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/taskReducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "./state/store";
-
-export type FilterValuesType = "all" | "completed" | "active";
-
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
-
-export type TaskStateType = {
-    [key: string]: TaskType[]
-}
+import React, {useCallback} from 'react';
+import './App.css';
+import {Todolist} from './Todolist';
+import {AddItemForm} from './components/AddItemForm/AddItemForm';
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
+import {Menu} from '@material-ui/icons';
+import {
+    addTodolistAC,
+    changeTodolistFilterAC,
+    changeTodolistTitleAC, FilterValuesType,
+    removeTodolistAC,
+    TodolistDomainType
+} from './state/todolistReducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskStateType} from './state/taskReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppStateType} from './state/store';
+import {TaskStatuses} from './api/tasksApi';
 
 function AppWithRedux() {
 
-    const todolists = useSelector<AppStateType, TodolistType[]>(state => state.todolist);
+    const todolists = useSelector<AppStateType, TodolistDomainType[]>(state => state.todolist);
     const tasks = useSelector<AppStateType, TaskStateType>(state => state.task);
     const dispatch = useDispatch();
 
@@ -42,8 +37,8 @@ function AppWithRedux() {
         dispatch(action);
     }, []);
 
-    const changeTaskStatus = useCallback((taskId: string, isDone: boolean, todolistId: string) => {
-        const action = changeTaskStatusAC(taskId, isDone, todolistId);
+    const changeTaskStatus = useCallback((taskId: string, status: TaskStatuses, todolistId: string) => {
+        const action = changeTaskStatusAC(taskId, status, todolistId);
         dispatch(action);
     }, []);
 
@@ -70,20 +65,20 @@ function AppWithRedux() {
     return (
         <div className="App">
             <AppBar
-                position={"static"}>
-                <Toolbar className={"toolbar"}>
+                position={'static'}>
+                <Toolbar className={'toolbar'}>
                     <IconButton
-                        edge={"start"}
-                        color={"inherit"}
-                        aria-label={"menu"}
+                        edge={'start'}
+                        color={'inherit'}
+                        aria-label={'menu'}
                     >
                         <Menu/>
                     </IconButton>
-                    <Typography variant={"h6"}>
+                    <Typography variant={'h6'}>
                         News
                     </Typography>
                     <Button
-                        color={"inherit"}>
+                        color={'inherit'}>
                         Login
                     </Button>
                 </Toolbar>
@@ -91,7 +86,7 @@ function AppWithRedux() {
             <Container fixed>
                 <Grid
                     container
-                    style={{padding: "20px"}}
+                    style={{padding: '20px'}}
                 >
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
@@ -104,7 +99,7 @@ function AppWithRedux() {
                             const allTodolistTasks = tasks[tl.id];
                             return (
                                 <Grid item>
-                                    <Paper style={{padding: "10px"}}>
+                                    <Paper style={{padding: '10px'}}>
                                         <Todolist
                                             key={tl.id}
                                             id={tl.id}
